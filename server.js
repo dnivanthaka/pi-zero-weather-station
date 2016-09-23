@@ -1,5 +1,8 @@
 //http://www.w3schools.com/howto/howto_css_switch.asp
 //https://expressjs.com/en/guide/routing.html
+
+var dest_dir = 'data';
+
 var express = require('express');
 var fs = require('fs');
 var app = express();
@@ -10,7 +13,20 @@ var io = require('socket.io');
 
 var status_led_pin = 17;
 
-var outputfile = 'readings.csv';
+var today = new Date();
+
+var dd = today.getDate();
+var mm = today.getMonth() + 1;
+var yy = today.getFullYear();
+
+if(dd<10){
+	dd = '0'+dd;
+}
+if(mm < 10){
+	mm = '0'+mm;
+}
+
+var outputfile = dest_dir+'/'+dd+'-'+mm+'-'+yy+'.csv';
 var fp = null;
 
 fp = fs.openSync(outputfile, 'a');
