@@ -1,7 +1,7 @@
 //http://www.w3schools.com/howto/howto_css_switch.asp
 //https://expressjs.com/en/guide/routing.html
 
-var dest_dir = 'data';
+var dest_dir = '/root/pi-zero-weather-station/data';
 
 var express = require('express');
 var fs = require('fs');
@@ -78,6 +78,10 @@ var heartBeat = setInterval(function(){
 }, 3000);
 var am2320_json = null
 var ds18b20_json = null;
+//Initial Data Read
+am2320_json = JSON.parse(am2320.readValues());
+ds18b20_json = JSON.parse(ds18b20.readValues());
+////////////////
 var sensorRead = setInterval(function(){
 	var d = new Date();
 	var am2320_val = am2320.readValues();
@@ -90,13 +94,13 @@ var sensorRead = setInterval(function(){
 	writeLine('"'+d.toUTCString()+'","'+am2320_json.temp+'","'+am2320_json.humid+'","'+ds18b20_json.indoor+'","'+ds18b20_json.outdoor+'"');
 
 	//io.emit('newSensorData', {"name":"value"});
-}, 2000);
+}, 60000);
 
 
 
 
 
-var server = app.listen(8081, function(){
+var server = app.listen(80, '0.0.0.0', function(){
     var host = server.address().address;
     var port = server.address().port;
     console.log("Server listening on http://%s:%s", host, port);

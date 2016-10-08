@@ -1,0 +1,14 @@
+[Unit]
+Description=PiWeatherStation
+
+[Service]
+ExecStart=/root/pi-zero-weather-station/server.js
+Restart=always
+User=nobody
+Group=nobody
+Environment=PATH=/usr/bin:/opt/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/root/pi-zero-weather-station
+
+[Install]
+WantedBy=multi-user.target
